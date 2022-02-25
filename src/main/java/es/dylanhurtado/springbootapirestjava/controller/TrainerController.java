@@ -1,5 +1,6 @@
 package es.dylanhurtado.springbootapirestjava.controller;
 
+import es.dylanhurtado.springbootapirestjava.conf.APIConfig;
 import es.dylanhurtado.springbootapirestjava.dto.PokemonDTO;
 import es.dylanhurtado.springbootapirestjava.dto.TrainerDTO;
 import es.dylanhurtado.springbootapirestjava.mappers.TrainerMapper;
@@ -12,12 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/trainer")
+@RequestMapping(APIConfig.API_PATH+"/trainer")
 public class TrainerController {
 
     private final TrainerRepository repository;
@@ -25,14 +27,16 @@ public class TrainerController {
 
     @GetMapping("/")
     public ResponseEntity<List<TrainerDTO>> getAll() {
-        return ResponseEntity.status(HttpStatus.FOUND)
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(mapper.toDTO(repository.findAll()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TrainerDTO> findById(@PathVariable UUID id) {
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .body(mapper.toDTO(repository.findById(id).orElseThrow(NullPointerException::new)));
+        if(repository.findById(id).isPresent())
+            return ResponseEntity.status(HttpStatus.OK)
+                .body(mapper.toDTO(repository.findById(id).get()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new TrainerDTO());
     }
 
     @PostMapping("/")
@@ -41,18 +45,22 @@ public class TrainerController {
                 .body(mapper.toDTO(repository.save(mapper.toModel(trainerDTO))));
     }
 
-    @PutMapping("/")
-    public ResponseEntity<TrainerDTO> putClient(@RequestBody TrainerDTO trainerDTO) {
-        return ResponseEntity.status(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public ResponseEntity<TrainerDTO> putClient(@PathVariable UUID id,@RequestBody TrainerDTO trainerDTO) {
+        Optional<Trainer> trainer =repository.findById(id);
+        trainerDTO.setId(id);
+        if(trainer.isPresent())
+            return ResponseEntity.status(HttpStatus.OK)
                 .body(mapper.toDTO(repository.save(mapper.toModel(trainerDTO))));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new TrainerDTO());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<TrainerDTO> delete(@PathVariable UUID id) {
-        Trainer trainer = repository.findById(id).orElse(null);
-        if (trainer != null) {
-            repository.delete(trainer);
-            return ResponseEntity.ok(mapper.toDTO(trainer));
+        Optional<Trainer> trainer = repository.findById(id);
+        if (trainer.isPresent()) {
+            repository.delete(trainer.get());
+            return ResponseEntity.ok(mapper.toDTO(trainer.get()));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new TrainerDTO());
     }
