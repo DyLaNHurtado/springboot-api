@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "pokemon")
+@Table(name = "POKEMON")
 public class Pokemon {
     private UUID id=UUID.randomUUID();
     private String name;

@@ -1,0 +1,20 @@
+2022-02-25 20:58:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "POKEMON" no encontrada
+Table "POKEMON" not found; SQL statement:
+select pokemon0_.id as id1_0_, pokemon0_.created_at as created_2_0_, pokemon0_.image as image3_0_, pokemon0_.level as level4_0_, pokemon0_.name as name5_0_, pokemon0_.shiny_rate as shiny_ra6_0_, pokemon0_.trainer_id as trainer_7_0_ from pokemon pokemon0_ [42102-200]
+2022-02-25 21:00:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "POKEMON" no encontrada
+Table "POKEMON" not found; SQL statement:
+select pokemon0_.id as id1_0_, pokemon0_.created_at as created_2_0_, pokemon0_.image as image3_0_, pokemon0_.level as level4_0_, pokemon0_.name as name5_0_, pokemon0_.shiny_rate as shiny_ra6_0_, pokemon0_.trainer_id as trainer_7_0_ from pokemon pokemon0_ [42102-200]
+2022-02-25 21:11:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "POKEMON" no encontrada
+Table "POKEMON" not found; SQL statement:
+select pokemon0_.id as id1_0_, pokemon0_.created_at as created_2_0_, pokemon0_.image as image3_0_, pokemon0_.level as level4_0_, pokemon0_.name as name5_0_, pokemon0_.shiny_rate as shiny_ra6_0_, pokemon0_.trainer_id as trainer_7_0_ from pokemon pokemon0_ [42102-200]
+2022-02-25 21:12:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "POKEMON" no encontrada
+Table "POKEMON" not found; SQL statement:
+select pokemon0_.id as id1_0_, pokemon0_.created_at as created_2_0_, pokemon0_.image as image3_0_, pokemon0_.level as level4_0_, pokemon0_.name as name5_0_, pokemon0_.shiny_rate as shiny_ra6_0_, pokemon0_.trainer_id as trainer_7_0_ from pokemon pokemon0_ [42102-200]
+2022-02-25 21:12:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "POKEMON" no encontrada
+Table "POKEMON" not found; SQL statement:
+select pokemon0_.id as id1_0_, pokemon0_.created_at as created_2_0_, pokemon0_.image as image3_0_, pokemon0_.level as level4_0_, pokemon0_.name as name5_0_, pokemon0_.shiny_rate as shiny_ra6_0_, pokemon0_.trainer_id as trainer_7_0_ from pokemon pokemon0_ [42102-200]

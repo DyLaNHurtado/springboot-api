@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PokemonDTO {
-    private UUID id;
+    private UUID id=UUID.randomUUID();
     private String name;
     private Double shinyRate;
     private Integer level;

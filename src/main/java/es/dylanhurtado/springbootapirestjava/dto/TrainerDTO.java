@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrainerDTO {
-    private UUID id;
+    private UUID id=UUID.randomUUID();
     private String username;
     private String password;
     private String avatar;
