@@ -1,6 +1,8 @@
 package es.dylanhurtado.springbootapirestjava.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -21,10 +23,20 @@ public class Trainer {
     private String email;
     private Set<TrainerRole> roles;
     private List<Pokemon> teamPokemon;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
 
     public Trainer() {
+    }
+
+    public Trainer(String username, String password, String avatar, String fullName, String email, Set<TrainerRole> roles, List<Pokemon> teamPokemon) {
+        this.username = username;
+        this.password = password;
+        this.avatar = avatar;
+        this.fullName = fullName;
+        this.email = email;
+        this.roles = roles;
+        this.teamPokemon = teamPokemon;
     }
 
     @Id
@@ -108,7 +120,7 @@ public class Trainer {
     public void setLastPasswordChangeAt(LocalDateTime lastPasswordChangeAt) {
         this.lastPasswordChangeAt = lastPasswordChangeAt;
     }
-
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER)
     public List<Pokemon> getTeamPokemon() {
         return teamPokemon;

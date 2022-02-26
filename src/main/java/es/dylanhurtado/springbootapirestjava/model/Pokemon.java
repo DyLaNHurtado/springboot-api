@@ -1,5 +1,7 @@
 package es.dylanhurtado.springbootapirestjava.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -17,12 +19,11 @@ public class Pokemon {
     private LocalDateTime createdAt = LocalDateTime.now();
     private Trainer trainer;
 
-    public Pokemon( String name, Double shinyRate, Integer level, String image, Trainer trainer) {
+    public Pokemon( String name, Double shinyRate, Integer level, String image) {
         this.name = name;
         this.shinyRate = shinyRate;
         this.level = level;
         this.image = image;
-        this.trainer = trainer;
     }
 
     public Pokemon() {
@@ -78,6 +79,7 @@ public class Pokemon {
         this.createdAt = createdAt;
     }
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     public Trainer getTrainer() {
         return trainer;
@@ -96,7 +98,6 @@ public class Pokemon {
                 ", level=" + level +
                 ", image='" + image + '\'' +
                 ", createdAt=" + createdAt +
-                ", trainer=" + trainer +
                 '}';
     }
 }
