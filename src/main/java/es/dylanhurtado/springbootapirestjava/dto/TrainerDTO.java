@@ -3,7 +3,6 @@ package es.dylanhurtado.springbootapirestjava.dto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import es.dylanhurtado.springbootapirestjava.model.TrainerRole;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrainerDTO {
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     private String username;
     private String password;
     private String avatar;

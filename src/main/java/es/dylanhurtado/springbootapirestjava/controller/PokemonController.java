@@ -1,9 +1,9 @@
 package es.dylanhurtado.springbootapirestjava.controller;
 
 import es.dylanhurtado.springbootapirestjava.conf.APIConfig;
-import es.dylanhurtado.springbootapirestjava.dto.ListPokemonDTO;
-import es.dylanhurtado.springbootapirestjava.dto.ListPokemonDTOPage;
 import es.dylanhurtado.springbootapirestjava.dto.PokemonDTO;
+import es.dylanhurtado.springbootapirestjava.dto.ResultPokemonDTO;
+import es.dylanhurtado.springbootapirestjava.dto.ResultPokemonPageDTO;
 import es.dylanhurtado.springbootapirestjava.mappers.PokemonMapper;
 import es.dylanhurtado.springbootapirestjava.model.Pokemon;
 import es.dylanhurtado.springbootapirestjava.repositories.PokemonRepository;
@@ -28,22 +28,22 @@ public class PokemonController {
     private final PokemonMapper mapper;
 
     @GetMapping("/")
-    public ResponseEntity<ListPokemonDTO> getAll() {
+    public ResponseEntity<ResultPokemonDTO> getAll() {
         List<Pokemon> pokemons = repository.findAll();
-        ListPokemonDTO result = new ListPokemonDTO(mapper.toDTO(pokemons));
+        ResultPokemonDTO result = new ResultPokemonDTO(mapper.toDTO(pokemons));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ListPokemonDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<ResultPokemonDTO> findById(@PathVariable UUID id) {
         Pokemon pokemon = repository.findById(id).orElse(null);
-        ListPokemonDTO result;
+        ResultPokemonDTO result;
         if (pokemon != null) {
-            result = new ListPokemonDTO(mapper.toDTO(List.of(pokemon)));
+            result = new ResultPokemonDTO(mapper.toDTO(List.of(pokemon)));
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result = new ListPokemonDTO(mapper.toDTO(new ArrayList<>()));
+            result = new ResultPokemonDTO(mapper.toDTO(new ArrayList<>()));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
     }
@@ -56,29 +56,29 @@ public class PokemonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ListPokemonDTO> putClient(@PathVariable UUID id, @RequestBody PokemonDTO pokemonDTO) {
+    public ResponseEntity<ResultPokemonDTO> putClient(@PathVariable UUID id, @RequestBody PokemonDTO pokemonDTO) {
         Optional<Pokemon> pokemon = repository.findById(id);
         pokemonDTO.setId(id);
         if (pokemon.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ListPokemonDTO(List.of(mapper.toDTO(repository.saveAndFlush(mapper.toModel(pokemonDTO))))));
+                    .body(new ResultPokemonDTO(List.of(mapper.toDTO(repository.saveAndFlush(mapper.toModel(pokemonDTO))))));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ListPokemonDTO(new ArrayList<>()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResultPokemonDTO(new ArrayList<>()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ListPokemonDTO> delete(@PathVariable UUID id) {
+    public ResponseEntity<ResultPokemonDTO> delete(@PathVariable UUID id) {
         Optional<Pokemon> pokemon = repository.findById(id);
         if (pokemon.isPresent()) {
             repository.delete(pokemon.get());
-            return ResponseEntity.ok(new ListPokemonDTO(List.of(mapper.toDTO(pokemon.get()))));
+            return ResponseEntity.ok(new ResultPokemonDTO(List.of(mapper.toDTO(pokemon.get()))));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ListPokemonDTO(new ArrayList<>()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResultPokemonDTO(new ArrayList<>()));
     }
 
     //findAll paginado filtrado y ordenado
     @GetMapping("/all")
-    public ResponseEntity<ListPokemonDTOPage> getAllPages(
+    public ResponseEntity<ResultPokemonPageDTO> getAllPages(
             // Podemos buscar por los campos que quieramos... nombre, precio... así construir consultas
             @RequestParam(required = false, name = "name") Optional<String> name,
             @RequestParam(required = false, name = "level") Optional<Double> level,
@@ -100,7 +100,7 @@ public class PokemonController {
         // De la página saco la lista de productos
         //List<Pokemon> pokemon = pagedResult.getContent();
         // Mapeo al DTO. Si quieres ver toda la info de las paginas pon pageResult.
-        ListPokemonDTOPage listProductoPageDTO = ListPokemonDTOPage.builder()
+        ResultPokemonPageDTO listProductoPageDTO = ResultPokemonPageDTO.builder()
                 .data(mapper.toDTO(pagedResult.getContent()))
                 .totalPages(pagedResult.getTotalPages())
                 .totalElements(pagedResult.getTotalElements())

@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ListPokemonDTOPage {
+public class ResultPokemonPageDTO {
     private final String consulta = LocalDateTime.now().toString();
     private final String project = "SpringBootAPIRest";
     private final String version = APIConfig.API_VERSION;
