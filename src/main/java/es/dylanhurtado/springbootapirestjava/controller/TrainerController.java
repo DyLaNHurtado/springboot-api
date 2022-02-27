@@ -1,6 +1,6 @@
 package es.dylanhurtado.springbootapirestjava.controller;
 
-import es.dylanhurtado.springbootapirestjava.conf.APIConfig;
+import es.dylanhurtado.springbootapirestjava.config.APIConfig;
 import es.dylanhurtado.springbootapirestjava.dto.ResultTrainerDTO;
 import es.dylanhurtado.springbootapirestjava.dto.TrainerDTO;
 import es.dylanhurtado.springbootapirestjava.mappers.TrainerMapper;

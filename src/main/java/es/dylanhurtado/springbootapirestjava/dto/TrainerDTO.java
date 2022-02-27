@@ -26,4 +26,11 @@ public class TrainerDTO {
     private List<PokemonDTO> teamPokemon;
     private LocalDateTime createdAt;
 
+    public TrainerDTO(String username, String avatar, String fullName, String email, Set<TrainerRole> roles) {
+        this.username = username;
+        this.avatar = avatar;
+        this.fullName = fullName;
+        this.email = email;
+        this.roles = roles;
+    }
 }

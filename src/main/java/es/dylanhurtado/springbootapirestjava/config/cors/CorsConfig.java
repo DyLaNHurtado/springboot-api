@@ -1,4 +1,4 @@
-package es.dylanhurtado.springbootapirestjava.conf.cors;
+package es.dylanhurtado.springbootapirestjava.config.cors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

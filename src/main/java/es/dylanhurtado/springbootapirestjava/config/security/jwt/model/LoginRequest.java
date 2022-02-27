@@ -1,4 +1,4 @@
-package es.dylanhurtado.springbootapirestjava.conf.security.model;
+package es.dylanhurtado.springbootapirestjava.config.security.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package es.dylanhurtado.springbootapirestjava.controller;
 
-import es.dylanhurtado.springbootapirestjava.conf.APIConfig;
+import es.dylanhurtado.springbootapirestjava.config.APIConfig;
 import es.dylanhurtado.springbootapirestjava.dto.PokemonDTO;
 import es.dylanhurtado.springbootapirestjava.dto.ResultPokemonDTO;
 import es.dylanhurtado.springbootapirestjava.dto.ResultPokemonPageDTO;

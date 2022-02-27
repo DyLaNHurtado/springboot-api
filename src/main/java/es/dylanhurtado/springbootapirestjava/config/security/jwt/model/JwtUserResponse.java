@@ -1,4 +1,4 @@
-package es.dylanhurtado.springbootapirestjava.conf.security.model;
+package es.dylanhurtado.springbootapirestjava.config.security.model;
 
 import es.dylanhurtado.springbootapirestjava.dto.TrainerDTO;
 import es.dylanhurtado.springbootapirestjava.model.TrainerRole;

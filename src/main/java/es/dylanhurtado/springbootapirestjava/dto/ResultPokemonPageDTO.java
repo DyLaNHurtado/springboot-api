@@ -1,6 +1,6 @@
 package es.dylanhurtado.springbootapirestjava.dto;
 
-import es.dylanhurtado.springbootapirestjava.conf.APIConfig;
+import es.dylanhurtado.springbootapirestjava.config.APIConfig;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

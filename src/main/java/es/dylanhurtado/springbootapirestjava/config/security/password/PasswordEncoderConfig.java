@@ -1,4 +1,4 @@
-package es.dylanhurtado.springbootapirestjava.conf.security.password;
+package es.dylanhurtado.springbootapirestjava.config.security.password;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,29 +1,45 @@
 package es.dylanhurtado.springbootapirestjava.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "trainer")
-public class Trainer {
-    private UUID id=UUID.randomUUID();
+@Table(name = "TRAINER")
+@Getter
+@Setter
+@EntityListeners(AuditingEntityListener.class)
+public class Trainer implements UserDetails {
+
+    @Id
+    private UUID id = UUID.randomUUID();
     private String username;
     private String password;
     private String avatar;
     private String fullName;
     private String email;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
     private Set<TrainerRole> roles;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Pokemon> teamPokemon;
+    @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
+    @LastModifiedDate
     private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
 
     public Trainer() {
@@ -39,95 +55,52 @@ public class Trainer {
         this.teamPokemon = teamPokemon;
     }
 
-    @Id
-    public UUID getId() {
-        return id;
+    public Trainer(String username, String encodePassword, String avatar, String fullname, String email, Set<TrainerRole> roles) {
+        this.username = username;
+        this.password = encodePassword;
+        this.avatar = avatar;
+        this.fullName = fullname;
+        this.email = email;
+        this.roles = roles;
+    }
+    
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    @Basic
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream().map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name())).collect(Collectors.toList());
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Basic
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    @Basic
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    @Basic
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    public Set<TrainerRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<TrainerRole> roles) {
-        this.roles = roles;
-    }
-
-    @CreatedDate
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    @LastModifiedDate
-    public LocalDateTime getLastPasswordChangeAt() {
-        return lastPasswordChangeAt;
-    }
-
-    public void setLastPasswordChangeAt(LocalDateTime lastPasswordChangeAt) {
-        this.lastPasswordChangeAt = lastPasswordChangeAt;
-    }
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER)
-    public List<Pokemon> getTeamPokemon() {
-        return teamPokemon;
-    }
-
-    public void setTeamPokemon(List<Pokemon> carrito) {
-        this.teamPokemon = carrito;
     }
 
     @Override
@@ -144,5 +117,18 @@ public class Trainer {
                 ", createdAt=" + createdAt +
                 ", lastPasswordChangeAt=" + lastPasswordChangeAt +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Trainer trainer = (Trainer) o;
+        return id != null && Objects.equals(id, trainer.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

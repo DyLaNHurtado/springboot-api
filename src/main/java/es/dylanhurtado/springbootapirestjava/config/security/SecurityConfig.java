@@ -1,7 +1,8 @@
-package es.dylanhurtado.springbootapirestjava.conf.security;
+package es.dylanhurtado.springbootapirestjava.config.security;
 
 
-import es.dylanhurtado.springbootapirestjava.conf.APIConfig;
+import es.dylanhurtado.springbootapirestjava.config.APIConfig;
+import es.dylanhurtado.springbootapirestjava.config.security.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
